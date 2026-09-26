@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Love Adventure — Felt Book Lab</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:system-ui,-apple-system,sans-serif;background:#171326;color:#fff;overflow:hidden}
+#stage{position:relative;width:100vw;height:100dvh;overflow:hidden;isolation:isolate;background:linear-gradient(#6c5ca7 0 48%,#524263 48% 100%);touch-action:manipulation}
+.layer{position:absolute;inset:0;pointer-events:none}.sky{z-index:1;background:radial-gradient(circle at 18% 14%,#fff9 0 2px,transparent 3px),radial-gradient(circle at 78% 18%,#fff8 0 2px,transparent 3px)}
+.hills{z-index:2;top:44%;background:linear-gradient(150deg,transparent 0 25%,#4b405b 26% 45%,transparent 46%),linear-gradient(210deg,transparent 0 35%,#41384f 36% 56%,transparent 57%)}
+.ground{z-index:3;top:66%;background:#342d42;border-top:6px solid #807091}
+.house{z-index:4;left:auto;right:7%;top:24%;width:38%;height:43%;background:#816c91;border:6px solid #30283d;border-radius:10px 10px 0 0;box-shadow:0 12px 30px #0007}
+.window{position:absolute;width:25%;height:23%;background:#ffd77b;border:5px solid #392f46;top:17%}.window.a{left:12%}.window.b{right:12%}
+#door{pointer-events:auto;position:absolute;left:39%;bottom:0;width:28%;height:45%;background:#4b3b57;border:5px solid #2b2334;border-radius:8px 8px 0 0;cursor:pointer}.doorGlow{box-shadow:0 0 30px #ffd36f;background:#7c5d74!important}
+.heart{z-index:8;position:absolute;font-size:38px;filter:drop-shadow(0 5px 4px #0008);pointer-events:auto;cursor:pointer;animation:bob 1.2s ease-in-out infinite alternate}.heart.got{animation:pop .35s forwards;pointer-events:none}
+@keyframes bob{to{transform:translateY(-10px)}}@keyframes pop{to{transform:scale(2);opacity:0}}
+#hero{z-index:7;position:absolute;left:8%;bottom:18%;width:78px;height:120px;transition:left .35s ease;filter:drop-shadow(0 8px 4px #0007)}
+.head{position:absolute;left:19px;top:0;width:42px;height:42px;border-radius:50%;background:#dca67f;border:4px solid #3c2637}.hair{position:absolute;left:12px;top:-7px;width:56px;height:34px;border-radius:50% 50% 35% 35%;background:#3d293d}.body{position:absolute;left:15px;top:39px;width:50px;height:57px;border-radius:20px 20px 8px 8px;background:#c46d82}.leg{position:absolute;top:91px;width:16px;height:29px;background:#272331;border-radius:5px}.leg.l{left:20px}.leg.r{left:44px}
+.railing{z-index:9;top:auto;height:23%;bottom:7%;background:repeating-linear-gradient(90deg,transparent 0 58px,#6f617e 59px 70px);border-top:12px solid #6f617e;opacity:.92}
+#sparkles{z-index:11}.spark{position:absolute;font-size:26px;animation:fly .9s forwards}@keyframes fly{to{transform:translateY(-100px) scale(1.8);opacity:0}}
+.hud{z-index:20;position:absolute;left:12px;right:12px;top:max(12px,env(safe-area-inset-top));display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.badge{background:#1d1829cc;border:2px solid #ffffff35;border-radius:999px;padding:9px 13px;backdrop-filter:blur(8px)}
+#dialogue{z-index:21;position:absolute;left:5%;right:5%;bottom:30%;background:#241d32e8;border:2px solid #ffffff38;border-radius:18px;padding:15px 18px;text-align:center;opacity:0;transform:translateY(10px);transition:.25s;pointer-events:none}#dialogue.show{opacity:1;transform:none}
+.controls{z-index:22;position:absolute;left:0;right:0;bottom:max(14px,env(safe-area-inset-bottom));display:flex;justify-content:center;gap:16px}
+button{pointer-events:auto;border:0;border-radius:18px;padding:14px 22px;font-size:22px;background:#f3d7e7;color:#38273c;box-shadow:0 5px 0 #8d6d89;font-weight:800}button:active{transform:translateY(4px);box-shadow:0 1px 0 #8d6d89}
+#curtain{z-index:50;position:absolute;inset:0;background:#171326;display:grid;place-items:center;text-align:center;padding:30px;transition:opacity .7s}#curtain.hide{opacity:0;pointer-events:none}
+small{opacity:.75}.title{font-size:clamp(30px,8vw,58px);font-weight:900}.pink{color:#ffd1e6}
+</style></head>
+<body><main id="stage">
+<div id="curtain"><div><div class="title">💗 Love Adventure</div><h2 class="pink">Digital Felt-Book Lab</h2><p>Every piece is its own layer. Tap, move, reveal, and let your brain make the movie. ✨</p><button id="start">OPEN THE BOOK</button><p><small>Safe prototype — the original game remains untouched.</small></p></div></div>
+<div class="layer sky"></div><div class="layer hills"></div><div class="layer ground"></div>
+<div class="layer house"><div class="window a"></div><div class="window b"></div><div id="door"></div></div>
+<div id="hero"><div class="hair"></div><div class="head"></div><div class="body"></div><div class="leg l"></div><div class="leg r"></div></div>
+<div class="heart" data-x="28" style="left:28%;bottom:33%">❤️</div><div class="heart" data-x="52" style="left:52%;bottom:25%">❤️</div><div class="heart" data-x="72" style="left:72%;bottom:36%">❤️</div>
+<div class="layer railing"></div><div id="sparkles" class="layer"></div>
+<div class="hud"><div class="badge">📖 Chapter 1</div><div class="badge">❤️ <span id="score">0</span>/3</div></div>
+<div id="dialogue">The world changed without loading another giant game. We only changed the layers. ✨</div>
+<div class="controls"><button id="left">◀</button><button id="act">ACT ✨</button><button id="right">▶</button></div>
+</main>
+<script>
+const hero=document.querySelector('#hero'),score=document.querySelector('#score'),door=document.querySelector('#door'),dialogue=document.querySelector('#dialogue'),stage=document.querySelector('#stage'),curtain=document.querySelector('#curtain');let x=8,hearts=0;
+document.querySelector('#start').onclick=()=>curtain.classList.add('hide');
+function move(n){x=Math.max(3,Math.min(87,x+n));hero.style.left=x+'%';collect()}
+function collect(){document.querySelectorAll('.heart:not(.got)').forEach(h=>{if(Math.abs(x-(+h.dataset.x))<7){h.classList.add('got');hearts++;score.textContent=hearts;spark(h.offsetLeft,h.offsetTop);if(hearts===3){door.classList.add('doorGlow');say('All three memories found! The door is awake. Tap ACT near the house. 💗')}}})}
+function spark(px,py){for(let i=0;i<7;i++){let s=document.createElement('i');s.className='spark';s.textContent=i%2?'✨':'💕';s.style.left=(px+Math.random()*50)+'px';s.style.top=(py+Math.random()*40)+'px';document.querySelector('#sparkles').append(s);setTimeout(()=>s.remove(),950)}}
+function say(t){dialogue.textContent=t;dialogue.classList.add('show');setTimeout(()=>dialogue.classList.remove('show'),2600)}
+function act(){if(x>62&&hearts===3){door.style.transform='perspective(250px) rotateY(-68deg)';door.style.transformOrigin='left';spark(innerWidth*.78,innerHeight*.45);say('SCENE CHANGE: hide/show + motion + foreground = movie magic! 🎬');setTimeout(()=>{stage.style.background='linear-gradient(#c884a7 0 48%,#67485e 48%)'},700)}else say(hearts<3?'Collect the three hearts first! ❤️':'Walk closer to the glowing door.')}
+document.querySelector('#left').onclick=()=>move(-8);document.querySelector('#right').onclick=()=>move(8);document.querySelector('#act').onclick=act;door.onclick=act;
+document.querySelectorAll('.heart').forEach(h=>h.onclick=()=>{x=+h.dataset.x;hero.style.left=x+'%';collect()});
+document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')move(-6);if(e.key==='ArrowRight')move(6);if(e.key===' '||e.key==='Enter')act()});
+</script></body></html>
